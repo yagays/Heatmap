@@ -1,17 +1,16 @@
 # -*- coding: utf-8 -*-
 require "pp"
 require 'optparse'
-# それぞれのtmapからfpkmを抜き出してきてgene_idごとのリストを作るスクリプト
 
 def open_t_delimited_file(filename)
   h = { }
   File.open(filename).readlines.each do |line|
     a =  line.split("\t")
-    if h[a[0]] #もし既にidとfpkmの配列がhに入っている場合
-      if h[a[0]].to_f < a[6].to_f #既に入っているfpkmが新しいものより小さい場合は大きい方を取る(全体で見てそのid最大値が欲しい)
+    if h[a[0]]                      #もし既にidとfpkmの配列がhに入っている場合
+      if h[a[0]].to_f < a[6].to_f   #既に入っているfpkmが新しいものより小さい場合は大きい方を取る(全体で見てそのid最大値が欲しい)
         h[a[0]] = a[6]
       end
-    else #入っていない場合
+    else                            #入っていない場合
       h[a[0]] = a[6]      
     end
   end
@@ -30,13 +29,14 @@ end
 
 def output_list(all_list,output_dir)
   if output_dir
-    f = File.open("#{output_dir}","w")
+    name = output_dir
   else
-    f = File.open("heatmap.txt","w")
+    name = "heatmap.txt"
   end
+  f = File.open("#{name}","w")
   f.puts all_list
   f.close
-  puts "Output end"
+  puts "output : " + name
 end
 
 
@@ -46,6 +46,7 @@ if __FILE__ == $PROGRAM_NAME
   file_list = []
   id_list = []
   all_list = []
+  name_list = ["gene_name"]
   
   ARGV.options do |opt|
     opt.on( '-a' ) { |a| fill_all =  1 }
@@ -53,8 +54,10 @@ if __FILE__ == $PROGRAM_NAME
     opt.parse!()
   end
   ARGV.each do |arg|
-      file_list <<  open_t_delimited_file(arg)
+    file_list <<  open_t_delimited_file(arg)
+    name_list << File::basename(arg,".*")
   end
+  all_list << name_list.join("\t")
 
   file_list.each do |h|
     id_list.concat(h.keys)
