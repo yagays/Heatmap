@@ -1,1 +1,14 @@
-transcripts.tmapから遺伝子発現行列を作る
+複数のtranscripts.tmapから遺伝子発現行列を作ります
+
+
+使い方：
+ruby heatmap.rb -a -o output.txt transcripts1.tmap transcripts2.tmap ... ,transcripts_n.tmap
+
+パラメータ：
+-a : すべてのtranscripts.tmapに値が存在する遺伝子のみを出力します
+-o : 出力ファイル名を指定します．(-oを指定しなかった場合は"heatmap.txt"となります)
+-aや-oは，あってもなくてもいいです．あと，transcripts.tmapはいくつも指定することができます．
+
+詳細：
+-ヘッダーのにはそれぞれの*.tmapのファイル名(拡張子除く)が使われます．
+-一つの.tmapで複数のgene_nameがある場合は，一番大きな値が使われます．

@@ -57,7 +57,7 @@ if __FILE__ == $PROGRAM_NAME
     file_list <<  open_t_delimited_file(arg)
     name_list << File::basename(arg,".*")
   end
-  all_list << name_list.join("\t")
+  all_list << name_list.join("\t") # add header
 
   file_list.each do |h|
     id_list.concat(h.keys)
