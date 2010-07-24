@@ -10,5 +10,5 @@ ruby heatmap.rb -a -o output.txt transcripts1.tmap transcripts2.tmap ... ,transc
 -aや-oは，あってもなくてもいいです．あと，transcripts.tmapはいくつも指定することができます．
 
 詳細：
--ヘッダーのにはそれぞれの*.tmapのファイル名(拡張子除く)が使われます．
--一つの.tmapで複数のgene_nameがある場合は，一番大きな値が使われます．
+- ヘッダーのにはそれぞれの*.tmapのファイル名(拡張子除く)が使われます．
+- 一つの.tmapで複数のgene_nameがある場合は，一番大きな値が使われます．
