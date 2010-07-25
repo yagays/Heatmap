@@ -6,12 +6,14 @@ def open_t_delimited_file(filename)
   h = { }
   File.open(filename).readlines.each do |line|
     a =  line.split("\t")
-    if h[a[0]]                      #もし既にidとfpkmの配列がhに入っている場合
-      if h[a[0]].to_f < a[6].to_f   #既に入っているfpkmが新しいものより小さい場合は大きい方を取る(全体で見てそのid最大値が欲しい)
-        h[a[0]] = a[6]
+    if /\d+/ =~ a[6]
+      if h[a[0]]                      #もし既にidとfpkmの配列がhに入っている場合
+        if h[a[0]].to_f < a[6].to_f   #既に入っているfpkmが新しいものより小さい場合は大きい方を取る
+          h[a[0]] = a[6]
+        end
+      else                            #入っていない場合
+        h[a[0]] = a[6]      
       end
-    else                            #入っていない場合
-      h[a[0]] = a[6]      
     end
   end
   puts filename.to_s + " was loaded."
