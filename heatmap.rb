@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 require "pp"
-require 'optparse'
+require "optparse"
 
 def open_t_delimited_file(filename)
   h = { }
