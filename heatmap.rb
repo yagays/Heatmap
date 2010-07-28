@@ -41,24 +41,34 @@ def output_list(all_list,output_dir)
   puts "output : " + name
 end
 
+def argv_input(argv)
+  file_list = []
+  name_list = ["gene_name"]
+  begin
+    argv.options do |opt|
+      opt.on( '-a' ) { |a| fill_all =  1 }
+      opt.on( '-o VAL' ) { |a| output_dir = a }
+      opt.parse!()
+    end
+    argv.each do |arg|
+      file_list <<  open_t_delimited_file(arg)
+      name_list << File::basename(arg,".*")
+    end
+    return file_list, name_list
+  rescue => ex
+    puts ex.message
+    exit
+  end
+end
+
 
 if __FILE__ == $PROGRAM_NAME
   output_dir = nil
   fill_all = nil
-  file_list = []
   id_list = []
   all_list = []
-  name_list = ["gene_name"]
-  
-  ARGV.options do |opt|
-    opt.on( '-a' ) { |a| fill_all =  1 }
-    opt.on( '-o VAL' ) { |a| output_dir = a }
-    opt.parse!()
-  end
-  ARGV.each do |arg|
-    file_list <<  open_t_delimited_file(arg)
-    name_list << File::basename(arg,".*")
-  end
+
+  file_list, name_list = argv_input(ARGV)
   all_list << name_list.join("\t") # add header
 
   file_list.each do |h|
